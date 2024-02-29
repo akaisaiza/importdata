@@ -171,13 +171,13 @@ const Home: React.FC = () => {
         
         {formsData.map((formData, index) => (
           <div key={index} className="border p-4 rounded space-y-2">
-            <div className="text-lg font-bold">Location {index + 1}</div>
+            <div className="text-lg font-bold">Địa điểm {index + 1}</div>
             <label className="block">
-              <span className="text-gray-700">Name</span>
+              <span className="text-gray-700">Tên</span>
               <input type="text" value={formData.name} onChange={(e) => handleChange(index, 'name', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
-              <span className="text-gray-700">Address</span>
+              <span className="text-gray-700">Địa chỉ</span>
               <input type="text" value={formData.address} onChange={(e) => handleChange(index, 'address', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             {Object.keys(formData.business_hours).map((day) => (
@@ -186,28 +186,27 @@ const Home: React.FC = () => {
                 <input type="text" value={formData.business_hours[day]} onChange={(e) => handleBusinessHoursChange(index, day, e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               </label>
             ))}
+            <span className="text-gray-700">Location</span>
             <label className="block">
-              <span className="text-gray-700">Latitude</span>
+              <span className="text-gray-700">Kinh độ</span>
               <input
                 type="text"
                 value={formData.location[0]}
                 onChange={(e) => handleLocationChange(index, 0, e.target.value)}
                 className="input input-bordered w-full"
-                placeholder="Latitude"
               />
             </label>
             <label className="block">
-              <span className="text-gray-700">Longitude</span>
+              <span className="text-gray-700">Vĩ độ</span>
               <input
                 type="text"
                 value={formData.location[1]}
                 onChange={(e) => handleLocationChange(index, 1, e.target.value)}
                 className="input input-bordered w-full"
-                placeholder="Longitude"
               />
             </label>
             <label className="block">
-              <span className="text-gray-700">Type</span>
+              <span className="text-gray-700">Loại</span>
               <select
                 value={formData.type}
                 onChange={(e) => handleChange(index, 'type', e.target.value as Type)}
@@ -219,7 +218,7 @@ const Home: React.FC = () => {
               </select>
             </label>
             <label className="block">
-              <span className="text-gray-700">Phone Number</span>
+              <span className="text-gray-700">Số điện thoại</span>
               <input type="text" value={formData.phone_number} onChange={(e) => handleChange(index, 'phone_number', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
@@ -227,23 +226,23 @@ const Home: React.FC = () => {
               <input type="text" value={formData.rate} onChange={(e) => handleChange(index, 'rate', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
-              <span className="text-gray-700">URL Page</span>
+              <span className="text-gray-700">Link page (nếu có)</span>
               <input type="text" value={formData.url_page} onChange={(e) => handleChange(index, 'url_page', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
-              <span className="text-gray-700">Content</span>
+              <span className="text-gray-700">Nội dung mô tả quán</span>
               <textarea value={formData.content} onChange={(e) => handleChange(index, 'content', e.target.value)} className="textarea textarea-bordered w-full" />
             </label>
             <label className="block">
-              <span className="text-gray-700">Menu</span>
+              <span className="text-gray-700">Thực đơn (nếu có)</span>
               <input type="text" value={formData.menu} onChange={(e) => handleChange(index, 'menu', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
-              <span className="text-gray-700">Sum Price</span>
+              <span className="text-gray-700">Giá trung bình</span>
               <input type="text" value={formData.sum_price} onChange={(e) => handleChange(index, 'sum_price', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <div>
-            <label className="text-gray-700">Photo Links</label>
+            <label className="text-gray-700">Đường dẫn của ảnh (copy link image address , chuột phải vào ảnh ) </label>
             {formData.photo_link.map((link, linkIndex) => (
               <div key={linkIndex} className="flex items-center space-x-2 p-3">
                 <input 
@@ -259,7 +258,7 @@ const Home: React.FC = () => {
                     onClick={() => handleRemovePhotoLink(index, linkIndex)}
                     className="btn btn-error btn-xs py-3"
                   >
-                    Remove
+                    Xóa
                   </button>
                 )}
               </div>
