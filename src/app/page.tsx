@@ -1,6 +1,12 @@
 "use client"
 // pages/index.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+enum Type {
+  One = '1',
+  Two = '2',
+  Three = '3',
+}
 
 interface Review {
   name: string;
@@ -20,7 +26,7 @@ interface FormData {
   phone_number: string;
   rate: string;
   reviews: Review[];
-  type: string;
+  type: Type; // Use the Type enum here
   location: string[];
   url_page: string;
   content: string;
@@ -49,7 +55,7 @@ const initialFormData: FormData = {
     rating: '',
     review_content: '',
   }],
-  type: '',
+  type: Type.One, // Default value
   location: ['', ''],
   url_page: '',
   content: '',
@@ -61,6 +67,35 @@ const initialFormData: FormData = {
 const Home: React.FC = () => {
   const [formsData, setFormsData] = useState<FormData[]>([initialFormData]);
 
+  useEffect(() => {
+    // Khôi phục dữ liệu khi component được tải ở phía client
+    const savedData = localStorage.getItem('formData');
+    if (savedData) {
+      setFormsData(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Lưu dữ liệu vào localStorage mỗi khi formsData thay đổi
+    if (formsData) {
+      localStorage.setItem('formData', JSON.stringify(formsData));
+    }
+  }, [formsData]);
+  const handleRemoveForm = (index: number) => {
+    const newFormsData = formsData.filter((_, i) => i !== index);
+    setFormsData(newFormsData);
+  };
+  const handleLocationChange = (formIndex: number, position: number, value: string) => {
+    const newFormsData = formsData.map((form, i) => {
+      if (i === formIndex) {
+        const newLocation = [...form.location];
+        newLocation[position] = value;
+        return { ...form, location: newLocation };
+      }
+      return form;
+    });
+    setFormsData(newFormsData);
+  };
   const handleChange = (index: number, field: string, value: string) => {
     const newFormsData = formsData.map((form, i) => {
       if (i === index) {
@@ -133,6 +168,7 @@ const Home: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto p-4">
       <form onSubmit={handleSubmit} className="space-y-4">
+        
         {formsData.map((formData, index) => (
           <div key={index} className="border p-4 rounded space-y-2">
             <div className="text-lg font-bold">Location {index + 1}</div>
@@ -150,6 +186,38 @@ const Home: React.FC = () => {
                 <input type="text" value={formData.business_hours[day]} onChange={(e) => handleBusinessHoursChange(index, day, e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               </label>
             ))}
+            <label className="block">
+              <span className="text-gray-700">Latitude</span>
+              <input
+                type="text"
+                value={formData.location[0]}
+                onChange={(e) => handleLocationChange(index, 0, e.target.value)}
+                className="input input-bordered w-full"
+                placeholder="Latitude"
+              />
+            </label>
+            <label className="block">
+              <span className="text-gray-700">Longitude</span>
+              <input
+                type="text"
+                value={formData.location[1]}
+                onChange={(e) => handleLocationChange(index, 1, e.target.value)}
+                className="input input-bordered w-full"
+                placeholder="Longitude"
+              />
+            </label>
+            <label className="block">
+              <span className="text-gray-700">Type</span>
+              <select
+                value={formData.type}
+                onChange={(e) => handleChange(index, 'type', e.target.value as Type)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value={Type.One}>Đồ uống, check in</option>
+                <option value={Type.Two}>Khám phá Ẩm thực</option>
+                <option value={Type.Three}>Trải nghiệm Giải trí</option>
+              </select>
+            </label>
             <label className="block">
               <span className="text-gray-700">Phone Number</span>
               <input type="text" value={formData.phone_number} onChange={(e) => handleChange(index, 'phone_number', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
@@ -204,8 +272,11 @@ const Home: React.FC = () => {
               Add Photo Link
             </button>
           </div>
+         <button type="button" onClick={() => handleRemoveForm(index)} className="btn btn-error">Xóa location này</button>
+
           </div>
         ))}
+
         <button type="button" onClick={handleAddForm} className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 px-12">Add Another Restaurant</button>
         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit and Download JSON</button>
       </form>
