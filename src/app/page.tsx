@@ -168,7 +168,7 @@ const Home: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto p-4">
       <form onSubmit={handleSubmit} className="space-y-4">
-        
+
         {formsData.map((formData, index) => (
           <div key={index} className="border p-4 rounded space-y-2">
             <div className="text-lg font-bold">Địa điểm {index + 1}</div>
@@ -186,25 +186,30 @@ const Home: React.FC = () => {
                 <input type="text" value={formData.business_hours[day]} onChange={(e) => handleBusinessHoursChange(index, day, e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               </label>
             ))}
-            <span className="text-gray-700">Location</span>
-            <label className="block">
-              <span className="text-gray-700">Kinh độ</span>
-              <input
-                type="text"
-                value={formData.location[0]}
-                onChange={(e) => handleLocationChange(index, 0, e.target.value)}
-                className="input input-bordered w-full"
-              />
-            </label>
-            <label className="block">
-              <span className="text-gray-700">Vĩ độ</span>
-              <input
-                type="text"
-                value={formData.location[1]}
-                onChange={(e) => handleLocationChange(index, 1, e.target.value)}
-                className="input input-bordered w-full"
-              />
-            </label>
+            <div className="block">
+              <span className="text-gray-700">Location</span>
+              <div className="flex space-x-4 mt-2">
+                <label className="flex-1">
+                  <span className="text-gray-700">Kinh độ</span>
+                  <input
+                    type="text"
+                    value={formData.location[0]}
+                    onChange={(e) => handleLocationChange(index, 0, e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                </label>
+                <label className="flex-1">
+                  <span className="text-gray-700">Vĩ độ</span>
+                  <input
+                    type="text"
+                    value={formData.location[1]}
+                    onChange={(e) => handleLocationChange(index, 1, e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                </label>
+              </div>
+            </div>
+
             <label className="block">
               <span className="text-gray-700">Loại</span>
               <select
@@ -231,7 +236,7 @@ const Home: React.FC = () => {
             </label>
             <label className="block">
               <span className="text-gray-700">Nội dung mô tả quán</span>
-              <textarea value={formData.content} onChange={(e) => handleChange(index, 'content', e.target.value)} className="textarea textarea-bordered w-full" />
+              <textarea value={formData.content} onChange={(e) => handleChange(index, 'content', e.target.value)} className="bg-gray-50 border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <label className="block">
               <span className="text-gray-700">Thực đơn (nếu có)</span>
@@ -242,36 +247,36 @@ const Home: React.FC = () => {
               <input type="text" value={formData.sum_price} onChange={(e) => handleChange(index, 'sum_price', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </label>
             <div>
-            <label className="text-gray-700">Đường dẫn của ảnh (copy link image address , chuột phải vào ảnh ) </label>
-            {formData.photo_link.map((link, linkIndex) => (
-              <div key={linkIndex} className="flex items-center space-x-2 p-3">
-                <input 
-                  type="text" 
-                  value={link} 
-                  onChange={(e) => handlePhotoLinkChange(index, linkIndex, e.target.value)}  
-                  placeholder="Photo Link" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 py-3" 
-                />
-                {formData.photo_link.length > 1 && (
-                  <button 
-                    type="button" 
-                    onClick={() => handleRemovePhotoLink(index, linkIndex)}
-                    className="btn btn-error btn-xs py-3"
-                  >
-                    Xóa
-                  </button>
-                )}
-              </div>
-            ))}
-            <button 
-              type="button" 
-              onClick={() => handleAddPhotoLink(index)}
-              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            >
-              Add Photo Link
-            </button>
-          </div>
-         <button type="button" onClick={() => handleRemoveForm(index)} className="btn btn-error">Xóa location này</button>
+              <label className="text-gray-700">Đường dẫn của ảnh (copy link image address , chuột phải vào ảnh ) </label>
+              {formData.photo_link.map((link, linkIndex) => (
+                <div key={linkIndex} className="flex items-center space-x-2 p-3">
+                  <input
+                    type="text"
+                    value={link}
+                    onChange={(e) => handlePhotoLinkChange(index, linkIndex, e.target.value)}
+                    placeholder="Photo Link"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 py-3"
+                  />
+                  {formData.photo_link.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemovePhotoLink(index, linkIndex)}
+                      className="btn btn-error btn-xs py-3"
+                    >
+                      Xóa
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => handleAddPhotoLink(index)}
+                className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              >
+                Add Photo Link
+              </button>
+            </div>
+            <button type="button" onClick={() => handleRemoveForm(index)} className="btn btn-error">Xóa location này</button>
 
           </div>
         ))}
